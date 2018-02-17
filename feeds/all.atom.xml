@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Sun Rongyang's Blog</title><link href="sun-rongyang.github.io/" rel="alternate"></link><link href="sun-rongyang.github.io/feeds/all.atom.xml" rel="self"></link><id>sun-rongyang.github.io/</id><updated>2018-02-17T18:27:00+08:00</updated><entry><title>Use Virtualbox and CentOS 7 Build a Local Linux Developement Environment on Mac</title><link href="sun-rongyang.github.io/2018/use-virtualbox-and-centos-7-build-a-local-linux-developement-environment-on-mac.html" rel="alternate"></link><published>2018-02-17T18:27:00+08:00</published><updated>2018-02-17T18:27:00+08:00</updated><author><name>Sun Rongyang</name></author><id>tag:None,2018-02-17:sun-rongyang.github.io/2018/use-virtualbox-and-centos-7-build-a-local-linux-developement-environment-on-mac.html</id><summary type="html">&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Although the Mac OS X operating system is &lt;em&gt;similar&lt;/em&gt; as Linux, there are still several differences between them. So it is necessarily to switch to a pure Linux at any time you want if you are a developer for Linux. The most convenient way is ssh to a Linux …&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Although the Mac OS X operating system is &lt;em&gt;similar&lt;/em&gt; as Linux, there are still several differences between them. So it is necessarily to switch to a pure Linux at any time you want if you are a developer for Linux. The most convenient way is ssh to a Linux server when you have a usable internet connection. But internet is not always usable, for example, you are in a aircraft. If one can virtualise a pure Linux environment at background in your local machine and log in though ssh and use a local file system as shared folder, that is very convenient. In this post, I will show you how to virtualise a Linux environment at background locally and set a local folder as a shared folder for the virtual machine. When you ssh to the virtual machine though a local port, you can use this pure Linux environment as your familiar remote Linux server.&lt;/p&gt;
+&lt;h2&gt;Install Virtualbox on Mac&lt;/h2&gt;
+&lt;p&gt;Virtualbox installation on your Mac is very easy. You just need go to the &lt;a href="http://download.virtualbox.org/virtualbox/5.2.6/"&gt;download page&lt;/a&gt;, download the &lt;a href="http://download.virtualbox.org/virtualbox/5.2.6/VirtualBox-5.2.6-120293-OSX.dmg"&gt;dmg file&lt;/a&gt; (version 5.2.6, now) and install it.&lt;/p&gt;
+&lt;h2&gt;Install CentOS 7 in the Virtualbox&lt;/h2&gt;
+&lt;p&gt;Linux environment installation is still straightforward. I select CentOS 7 as an example, here. You can chose any Linux distribution as you want, like Ubuntu, OpenSUSE and Arch.&lt;/p&gt;
+&lt;p&gt;First, download CentOS 7 distribution iso file at &lt;a href="https://www.centos.org/download/"&gt;official website&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Then open the Virtualbox application and click &lt;code&gt;New&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/install-centos7-in-the-virtualbox-1.png"&gt;&lt;/p&gt;
+&lt;p&gt;and type some basic information:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/install-centos7-in-the-virtualbox-2.png"&gt;&lt;/p&gt;
+&lt;p&gt;Then set memory size of your virtual machine:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/install-centos7-in-the-virtualbox-3.png"&gt;&lt;/p&gt;
+&lt;p&gt;Then create a virtual hard disk to your virtual machine:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/install-centos7-in-the-virtualbox-4.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/install-centos7-in-the-virtualbox-5.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/install-centos7-in-the-virtualbox-6.png"&gt;
+&lt;code&gt;Dynamically allocated&lt;/code&gt; can save hard disk space of your Mac.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/install-centos7-in-the-virtualbox-7.png"&gt;&lt;/p&gt;
+&lt;p&gt;Then mount CentOS 7 installation iso file to the optical drive of your virtual machine:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/install-centos7-in-the-virtualbox-8.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/install-centos7-in-the-virtualbox-9.png"&gt;&lt;/p&gt;
+&lt;p&gt;Finally, &lt;code&gt;Start&lt;/code&gt; the virtual machine and install the CentOS 7 follow the installation guide.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/install-centos7-in-the-virtualbox-10.png"&gt;&lt;/p&gt;
+&lt;h3&gt;Network configurations for the virtual machine&lt;/h3&gt;
+&lt;p&gt;After normal installation, the virtual machine can not connect to the Internet, because the network device is not turned on when you boot for default configuration. We need modify the default configuration:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Modify &lt;code&gt;ONBOOT=no&lt;/code&gt; to &lt;code&gt;ONBOOT=yes&lt;/code&gt; and reboot.&lt;/p&gt;
+&lt;h2&gt;Install Virtualbox Guest Additions&lt;/h2&gt;
+&lt;h3&gt;Download the matched version iso file&lt;/h3&gt;
+&lt;p&gt;First get the version of your Virtualbox, and go to the &lt;a href="http://download.virtualbox.org/virtualbox/5.2.6/"&gt;download page&lt;/a&gt;(for 5.2.6) to download matched version Virtualbox guest additions iso file, &lt;code&gt;VBoxGuestAdditions_[version].iso&lt;/code&gt; (for 5.2.6: &lt;a href="http://download.virtualbox.org/virtualbox/5.2.6/VBoxGuestAdditions_5.2.6.iso"&gt;VBoxGuestAdditions_5.2.6.iso&lt;/a&gt;).&lt;/p&gt;
+&lt;h3&gt;Install required packages on CentOS 7 virtual machine&lt;/h3&gt;
+&lt;p&gt;Before install Virtualbox guest additions, we need install some development tools which are needed. The following commends need be executed by a root account or a account with &lt;code&gt;sudo&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    yum update
+    yum groupinstall &amp;quot;Development Tools&amp;quot;
+    yum install kernel-devel
+    yum install epel-release
+    yum install dkms
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Run installation script to install Virtualbox guest additions&lt;/h3&gt;
+&lt;p&gt;First, we mount the iso file on the optical drive of the virtual machine like when we installed CentOS 7 and reboot. Then we create a folder to mount the optical drive:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    mkdir /tmp/VBoxLinuxAdditions
+    mount /dev/cdrom /tmp/VBoxLinuxAdditions/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then we install Virtualbox guest additions:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    cd /tmp/VBoxLinuxAdditions
+    sh /tmp/VBoxLinuxAdditions/VBoxLinuxAdditions.run
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Finally, we reboot the virtual machine:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    shutdown -r now
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Set SSH Login through Localhost&lt;/h2&gt;
+&lt;h3&gt;In Virtualbox application&lt;/h3&gt;
+&lt;p&gt;First, we need shut down the virtual machine. Then we set ssh login port:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/set-ssh-login-through-localhost-1.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/set-ssh-login-through-localhost-2.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/set-ssh-login-through-localhost-3.png"&gt;&lt;/p&gt;
+&lt;h3&gt;Start up the virtual machine through command line&lt;/h3&gt;
+&lt;p&gt;You can start up and manage your virtual machine through command line. We can list all the virtual machines on the host machine:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    VBoxManage list vms
+
+    ...
+    &lt;span class="s2"&gt;&amp;quot;CentOS7&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;055381a3-fa87-4ed9-a2a7-4a426cd42c44&lt;span class="o"&gt;}&lt;/span&gt;
+    ...
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And start up the virtual machine by the command:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;   VBoxManage startvm CentOS7 --type headless
+
+   Waiting &lt;span class="k"&gt;for&lt;/span&gt; VM &lt;span class="s2"&gt;&amp;quot;CentOS7&amp;quot;&lt;/span&gt; to power on...
+   VM &lt;span class="s2"&gt;&amp;quot;CentOS7&amp;quot;&lt;/span&gt; has been successfully started.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;where &lt;code&gt;--type headless&lt;/code&gt; start up the virtual machine in the background. If you want to use GUI, you can change it as &lt;code&gt;--type gui&lt;/code&gt;. Then you can list all the running virtual machines:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    VBoxManage list runningvms
+
+    &lt;span class="s2"&gt;&amp;quot;CentOS7&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;055381a3-fa87-4ed9-a2a7-4a426cd42c44&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And you can shut down the running virtual machine:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    VBoxManage controlvm CentOS7 poweroff
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Connect your virtual machine through command line&lt;/h3&gt;
+&lt;p&gt;After started up your virtual machine using &lt;code&gt;--type headless&lt;/code&gt;, you can connect to your virtual machine through command line as connecting to a remote Linux server:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/set-ssh-login-through-localhost-4.png"&gt;&lt;/p&gt;
+&lt;h2&gt;Set Shared Folder for the Virtual Machine&lt;/h2&gt;
+&lt;h3&gt;In the Virtualbox application&lt;/h3&gt;
+&lt;p&gt;Now we shut down the virtual machine and set a folder of host machine as the shared folder:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/set-shared-folder-for-the-virtual-machine-1.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/set-shared-folder-for-the-virtual-machine-2.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="sun-rongyang.github.io/2018/figure/set-shared-folder-for-the-virtual-machine-3.png"&gt;&lt;/p&gt;
+&lt;h3&gt;Share the folder to normal user on the virtual machine&lt;/h3&gt;
+&lt;p&gt;Now we start up the virtual machine. And we can find the shared folder at &lt;code&gt;/media/sf_[NameOfTheSharedFolder]&lt;/code&gt;. But this folder can only be readded/written by root and users in the &lt;code&gt;vboxsf&lt;/code&gt; group. We need add normal user to the &lt;code&gt;vboxsf&lt;/code&gt; group to use the shared folder:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    usermod -a -G vboxsf USER
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;where &lt;code&gt;USER&lt;/code&gt; is the name of user you want to add to &lt;code&gt;vboxsf&lt;/code&gt; group. Then reboot the virtual machine.&lt;/p&gt;
+&lt;h3&gt;Mount the shared folder to a appointed path&lt;/h3&gt;
+&lt;p&gt;Now we can use the shared folder, but it is convenient to mount the folder automatically to a appointed path during start up. Add the following code to &lt;code&gt;/etc/rc.local&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    mount -t vboxsf -o uid=USER_UID,gid=USER_GID NameOfTheSharedFolder /a/appointed/path
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;USER_UID&lt;/code&gt; and &lt;code&gt;USER_GID&lt;/code&gt; can be found in &lt;code&gt;/etc/passwd&lt;/code&gt; file. Then add &lt;code&gt;-x&lt;/code&gt; attribute to the file:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;   chmod +x /etc/rc.d/rc.local
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Finally, reboot the virtual machine. You will find the shared folder with read/write have been mounted at &lt;code&gt;/a/appointed/path&lt;/code&gt; .&lt;/p&gt;
+&lt;p&gt;That's it! A local pure Linux environment with a host machine shared folder has been constructed.&lt;/p&gt;</content><category term="Linux"></category><category term="OSX"></category><category term="Mac"></category><category term="VM"></category></entry></feed>
