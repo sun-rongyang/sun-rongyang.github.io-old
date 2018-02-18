@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="https://sun-rongyang.github.io/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://sun-rongyang.github.io/theme/pygments/solarized-dark.min.css">
+  <link rel="stylesheet" type="text/css" href="https://sun-rongyang.github.io/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="https://sun-rongyang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Sun Rongyang's Blog Atom">
+
+
+
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Sun Rongyang" />
+<meta name="description" content="Install CentOS 7 on the main node Installation of CentOS 7 is very straightforward. What I want to consider here is something need be noticed. For the hard disk partitioning, your plan should seems like: Partition FileSystem Note Swap Swap Memory * (1.0~2.0) /boot xfs /tmp xfs Not …" />
+<meta name="keywords" content="HPC, cluster, Linux">
+
+<meta property="og:site_name" content="Sun Rongyang's Blog"/>
+<meta property="og:title" content="Build Your Own HPC Cluster: (2) Configure Linux on Main Node"/>
+<meta property="og:description" content="Install CentOS 7 on the main node Installation of CentOS 7 is very straightforward. What I want to consider here is something need be noticed. For the hard disk partitioning, your plan should seems like: Partition FileSystem Note Swap Swap Memory * (1.0~2.0) /boot xfs /tmp xfs Not …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://sun-rongyang.github.io/2018/build-your-own-hpc-cluster-2-configure-linux-on-main-node.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-02-18 20:08:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://sun-rongyang.github.io/author/sun-rongyang.html">
+<meta property="article:section" content="HPC"/>
+<meta property="article:tag" content="HPC"/>
+<meta property="article:tag" content="cluster"/>
+<meta property="article:tag" content="Linux"/>
+<meta property="og:image" content="/images/avatar.jpg">
+
+  <title>Sun Rongyang's Blog &ndash; Build Your Own HPC Cluster: (2) Configure Linux on Main Node</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="https://sun-rongyang.github.io">
+        <img src="/images/avatar.jpg" alt="Sun Rongyang" title="Sun Rongyang">
+      </a>
+      <h1><a href="https://sun-rongyang.github.io">Sun Rongyang</a></h1>
+
+
+
+      <ul class="social">
+        <li><a class="sc-envelope-o" href="mailto:sun-rongyang@outlook.com" target="_blank"><i class="fa fa-envelope-o"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/sun-rongyang" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://sun-rongyang.github.io">    Home
+</a>
+
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://sun-rongyang.github.io/feeds/all.atom.xml">    Atom
+</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="build-your-own-hpc-cluster-2-configure-linux-on-main-node">Build Your Own HPC Cluster: (2) Configure Linux on Main Node</h1>
+    <p>
+          Posted on Sun 18 February 2018 in <a href="https://sun-rongyang.github.io/category/hpc.html">HPC</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <h2>Install CentOS 7 on the main node</h2>
+<p>Installation of CentOS 7 is very straightforward. What I want to consider here is something need be noticed. For the hard disk partitioning, your plan should seems like:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Partition</th>
+<th align="left">FileSystem</th>
+<th align="left">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Swap</td>
+<td align="left">Swap</td>
+<td align="left">Memory * (1.0~2.0)</td>
+</tr>
+<tr>
+<td align="left">/boot</td>
+<td align="left">xfs</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">/tmp</td>
+<td align="left">xfs</td>
+<td align="left">Not too large</td>
+</tr>
+<tr>
+<td align="left">/</td>
+<td align="left">xfs</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">/home</td>
+<td align="left">xfs</td>
+<td align="left">Large enough</td>
+</tr>
+<tr>
+<td align="left">BIOSboot</td>
+<td align="left">biosboot</td>
+<td align="left">For bios boot</td>
+</tr>
+</tbody>
+</table>
+<p>For temporary path <code>/tmp</code>, it is better to allocate a small part of the hard disk to it independently. Because all the users have <code>777</code> permission, someone wiil write some large temporary file to the path to drain the space of <code>/</code> if <code>/tmp</code> just mount to root path.</p>
+<p>For the boot mode, we chose Legacy. Then the installation procedures are all straightforward. After installing CentOS 7, we can configure our network.</p>
+<h2>Network configuration</h2>
+<p>At the login node, one network interface connects the Internet, the other one connects the LAN. First we get the names of the interfaces and check that they have been connected with network cable.</p>
+<div class="highlight"><pre><span></span>ip link <span class="c1"># get the name of interface</span>
+<span class="m">1</span>: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span class="m">65536</span> qdisc noqueue state UNKNOWN mode DEFAULT qlen <span class="m">1</span>
+    link/loopback <span class="m">00</span>:00:00:00:00:00 brd <span class="m">00</span>:00:00:00:00:00
+<span class="m">2</span>: enp6s0f0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="m">1500</span> qdisc mq state UP mode DEFAULT qlen <span class="m">1000</span>
+    link/ether <span class="m">00</span>:25:90:98:bd:f0 brd ff:ff:ff:ff:ff:ff
+<span class="m">3</span>: enp6s0f1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="m">1500</span> qdisc mq state UP mode DEFAULT qlen <span class="m">1000</span>
+    link/ether <span class="m">00</span>:25:90:98:bd:f1 brd ff:ff:ff:ff:ff:ff
+</pre></div>
+
+
+<p><strong>NOTE: We ignore the bash shell prompt ''#'' and we are always at root user except the final normal user test.</strong> </p>
+<p>Here, we see two physical interfaces, enp6s0f0 and enp6s0f1. We select enp6s0f1 as the interface which connect Internet. We can use <code>ethtool</code> command to check whether the interface has been connected to the Internet.</p>
+<div class="highlight"><pre><span></span>ethtool enp6s0f1
+
+Settings <span class="k">for</span> enp6s0f1:
+    Supported ports: <span class="o">[</span> TP <span class="o">]</span>
+    Supported link modes:   10baseT/Half 10baseT/Full
+                            100baseT/Half 100baseT/Full
+                            1000baseT/Full
+    Supported pause frame use: Symmetric
+    Supports auto-negotiation: Yes
+    Advertised link modes:  10baseT/Half 10baseT/Full
+                            100baseT/Half 100baseT/Full
+                            1000baseT/Full
+    Advertised pause frame use: Symmetric
+    Advertised auto-negotiation: Yes
+    Speed: 1000Mb/s
+    Duplex: Full
+    Port: Twisted Pair
+    PHYAD: <span class="m">1</span>
+    Transceiver: internal
+    Auto-negotiation: on
+    MDI-X: off <span class="o">(</span>auto<span class="o">)</span>
+    Supports Wake-on: d
+    Wake-on: d
+    Current message level: 0x00000007 <span class="o">(</span><span class="m">7</span><span class="o">)</span>
+                   drv probe link
+    Link detected: yes <span class="c1"># network cable connected</span>
+
+$ ethtool enp6s0f0
+<span class="c1"># similar output</span>
+</pre></div>
+
+
+<p>Then we set the network parameters about the two interfaces.</p>
+<div class="highlight"><pre><span></span>$ vi /etc/sysconfig/network-scripts/ifcfg-enp6s0f1
+
+<span class="nv">TYPE</span><span class="o">=</span>Ethernet
+<span class="nv">BOOTPROTO</span><span class="o">=</span>static
+<span class="nv">IPADDR</span><span class="o">=</span>your_own_internet_ip_address
+<span class="nv">NETMASK</span><span class="o">=</span>your_netmask
+<span class="nv">GATEWAY</span><span class="o">=</span>your_getway
+<span class="nv">NAME</span><span class="o">=</span>enp6s0f1
+<span class="nv">UUID</span><span class="o">=</span>1bb4d952-da42-4494-a43c-46ebc4442e0e
+<span class="nv">DEVICE</span><span class="o">=</span>enp6s0f1
+<span class="nv">ONBOOT</span><span class="o">=</span>yes
+<span class="nv">NETWORK</span><span class="o">=</span>
+<span class="nv">BROADCAST</span><span class="o">=</span>
+
+---------------------------
+
+$ vi /etc/sysconfig/network-scripts/ifcfg-enp6s0f0
+
+<span class="nv">TYPE</span><span class="o">=</span>Ethernet
+<span class="nv">BOOTPROTO</span><span class="o">=</span>static
+<span class="nv">IPADDR</span><span class="o">=</span><span class="m">192</span>.168.6.1
+<span class="nv">NETMASK</span><span class="o">=</span><span class="m">255</span>.255.255.0
+<span class="nv">NAME</span><span class="o">=</span>enp6s0f0
+<span class="nv">UUID</span><span class="o">=</span>c5469722-15c1-40b0-b033-fc45ef72c223
+<span class="nv">DEVICE</span><span class="o">=</span>enp6s0f0
+<span class="nv">ONBOOT</span><span class="o">=</span>yes
+</pre></div>
+
+
+<p><strong>NOTE: The LAN interface enp6s0f0 need not to set the "GATEWAY".</strong></p>
+<p>Then we set the DNS servers.</p>
+<div class="highlight"><pre><span></span>vi /etc/resolv.conf
+</pre></div>
+
+
+<p>And add your own DNS servers to the file. Then we set the hosts and hostname of the login node. </p>
+<div class="highlight"><pre><span></span>vi /etc/hosts <span class="c1"># add the line below</span>
+-----------------------------
+your_own_internet_ip_address your_loginNode_hostname <span class="c1"># IP address and hostname of the Internet</span>
+<span class="m">192</span>.168.6.1 master <span class="c1"># IP address and hostname of the LAN</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;your_loginNode_hostname&quot;</span> &gt; /etc/hostname
+</pre></div>
+
+
+<p>Then, we restart the network service.</p>
+<div class="highlight"><pre><span></span>/etc/init.d/network restart
+
+<span class="c1"># check the Internet</span>
+ping -c4 bing.com
+</pre></div>
+
+
+<p>Now, we can reboot the login node.</p>
+<div class="highlight"><pre><span></span>shutdown -r now
+</pre></div>
+
+
+<h2>Basic Configuration</h2>
+<p>Now, we can upgrade our system first time.</p>
+<div class="highlight"><pre><span></span>yum upgrade -y
+</pre></div>
+
+
+<p>Then, we install some necessarily used softwares using yum.</p>
+<div class="highlight"><pre><span></span>yum install -y wget net-tools vim
+</pre></div>
+
+
+<p>And we add EPEL repository and OpenHPC repository to the system.</p>
+<div class="highlight"><pre><span></span><span class="nb">cd</span> /tmp
+wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-10.noarch.rpm
+rpm -ivh epel-release-7-10.noarch.rpm
+yum install http://build.openhpc.community/OpenHPC:/1.3/CentOS_7/x86_64/ohpc-release-1.3-1.el7.x86_64.rpm
+</pre></div>
+
+
+<p>For the requirement for OpenHPC, we need disable by firewall.</p>
+<div class="highlight"><pre><span></span>systemctl disable firewalld
+systemctl stop firewalld
+</pre></div>
+
+
+<p>To save time, we can also install bash autocompletion tool.</p>
+<div class="highlight"><pre><span></span>yum install bash-completion-extras -y
+</pre></div>
+
+
+<p>Finally, we upgrade the system again. </p>
+<div class="highlight"><pre><span></span>yum upgrade -y
+</pre></div>
+
+
+<p>In next post, we will install OpenHPC and configure the provisioning system which is the most powerful tool to construct the compute nodes. Stay tuned! </p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://sun-rongyang.github.io/tag/hpc.html">HPC</a>
+      <a href="https://sun-rongyang.github.io/tag/cluster.html">cluster</a>
+      <a href="https://sun-rongyang.github.io/tag/linux.html">Linux</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy; Sun Rongyang 2018</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Sun Rongyang's Blog ",
+  "url" : "https://sun-rongyang.github.io",
+  "image": "/images/avatar.jpg",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

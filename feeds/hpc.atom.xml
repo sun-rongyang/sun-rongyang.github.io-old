@@ -1,5 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Sun Rongyang's Blog - HPC</title><link href="https://sun-rongyang.github.io/" rel="alternate"></link><link href="https://sun-rongyang.github.io/feeds/hpc.atom.xml" rel="self"></link><id>https://sun-rongyang.github.io/</id><updated>2018-02-18T09:23:00+08:00</updated><entry><title>Build Your Own HPC Cluster: (1) Hardware Construction</title><link href="https://sun-rongyang.github.io/2018/build-your-own-hpc-cluster-1-hardware-construction.html" rel="alternate"></link><published>2018-02-18T09:23:00+08:00</published><updated>2018-02-18T09:23:00+08:00</updated><author><name>Sun Rongyang</name></author><id>tag:sun-rongyang.github.io,2018-02-18:/2018/build-your-own-hpc-cluster-1-hardware-construction.html</id><summary type="html">&lt;h2&gt;Introduction&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Sun Rongyang's Blog - HPC</title><link href="https://sun-rongyang.github.io/" rel="alternate"></link><link href="https://sun-rongyang.github.io/feeds/hpc.atom.xml" rel="self"></link><id>https://sun-rongyang.github.io/</id><updated>2018-02-18T20:08:00+08:00</updated><entry><title>Build Your Own HPC Cluster: (2) Configure Linux on Main Node</title><link href="https://sun-rongyang.github.io/2018/build-your-own-hpc-cluster-2-configure-linux-on-main-node.html" rel="alternate"></link><published>2018-02-18T20:08:00+08:00</published><updated>2018-02-18T20:08:00+08:00</updated><author><name>Sun Rongyang</name></author><id>tag:sun-rongyang.github.io,2018-02-18:/2018/build-your-own-hpc-cluster-2-configure-linux-on-main-node.html</id><summary type="html">&lt;h2&gt;Install CentOS 7 on the main node&lt;/h2&gt;
+&lt;p&gt;Installation of CentOS 7 is very straightforward. What I want to consider here is something need be noticed. For the hard disk partitioning, your plan should seems like:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align="left"&gt;Partition&lt;/th&gt;
+&lt;th align="left"&gt;FileSystem&lt;/th&gt;
+&lt;th align="left"&gt;Note&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align="left"&gt;Swap&lt;/td&gt;
+&lt;td align="left"&gt;Swap&lt;/td&gt;
+&lt;td align="left"&gt;Memory * (1.0~2.0)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="left"&gt;/boot&lt;/td&gt;
+&lt;td align="left"&gt;xfs&lt;/td&gt;
+&lt;td align="left"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="left"&gt;/tmp&lt;/td&gt;
+&lt;td align="left"&gt;xfs&lt;/td&gt;
+&lt;td align="left"&gt;Not …&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;</summary><content type="html">&lt;h2&gt;Install CentOS 7 on the main node&lt;/h2&gt;
+&lt;p&gt;Installation of CentOS 7 is very straightforward. What I want to consider here is something need be noticed. For the hard disk partitioning, your plan should seems like:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align="left"&gt;Partition&lt;/th&gt;
+&lt;th align="left"&gt;FileSystem&lt;/th&gt;
+&lt;th align="left"&gt;Note&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align="left"&gt;Swap&lt;/td&gt;
+&lt;td align="left"&gt;Swap&lt;/td&gt;
+&lt;td align="left"&gt;Memory * (1.0~2.0)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="left"&gt;/boot&lt;/td&gt;
+&lt;td align="left"&gt;xfs&lt;/td&gt;
+&lt;td align="left"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="left"&gt;/tmp&lt;/td&gt;
+&lt;td align="left"&gt;xfs&lt;/td&gt;
+&lt;td align="left"&gt;Not too large&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="left"&gt;/&lt;/td&gt;
+&lt;td align="left"&gt;xfs&lt;/td&gt;
+&lt;td align="left"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="left"&gt;/home&lt;/td&gt;
+&lt;td align="left"&gt;xfs&lt;/td&gt;
+&lt;td align="left"&gt;Large enough&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="left"&gt;BIOSboot&lt;/td&gt;
+&lt;td align="left"&gt;biosboot&lt;/td&gt;
+&lt;td align="left"&gt;For bios boot&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;For temporary path &lt;code&gt;/tmp&lt;/code&gt;, it is better to allocate a small part of the hard disk to it independently. Because all the users have &lt;code&gt;777&lt;/code&gt; permission, someone wiil write some large temporary file to the path to drain the space of &lt;code&gt;/&lt;/code&gt; if &lt;code&gt;/tmp&lt;/code&gt; just mount to root path.&lt;/p&gt;
+&lt;p&gt;For the boot mode, we chose Legacy. Then the installation procedures are all straightforward. After installing CentOS 7, we can configure our network.&lt;/p&gt;
+&lt;h2&gt;Network configuration&lt;/h2&gt;
+&lt;p&gt;At the login node, one network interface connects the Internet, the other one connects the LAN. First we get the names of the interfaces and check that they have been connected with network cable.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ip link &lt;span class="c1"&gt;# get the name of interface&lt;/span&gt;
+&lt;span class="m"&gt;1&lt;/span&gt;: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span class="m"&gt;65536&lt;/span&gt; qdisc noqueue state UNKNOWN mode DEFAULT qlen &lt;span class="m"&gt;1&lt;/span&gt;
+    link/loopback &lt;span class="m"&gt;00&lt;/span&gt;:00:00:00:00:00 brd &lt;span class="m"&gt;00&lt;/span&gt;:00:00:00:00:00
+&lt;span class="m"&gt;2&lt;/span&gt;: enp6s0f0: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m"&gt;1500&lt;/span&gt; qdisc mq state UP mode DEFAULT qlen &lt;span class="m"&gt;1000&lt;/span&gt;
+    link/ether &lt;span class="m"&gt;00&lt;/span&gt;:25:90:98:bd:f0 brd ff:ff:ff:ff:ff:ff
+&lt;span class="m"&gt;3&lt;/span&gt;: enp6s0f1: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m"&gt;1500&lt;/span&gt; qdisc mq state UP mode DEFAULT qlen &lt;span class="m"&gt;1000&lt;/span&gt;
+    link/ether &lt;span class="m"&gt;00&lt;/span&gt;:25:90:98:bd:f1 brd ff:ff:ff:ff:ff:ff
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;NOTE: We ignore the bash shell prompt ''#'' and we are always at root user except the final normal user test.&lt;/strong&gt; &lt;/p&gt;
+&lt;p&gt;Here, we see two physical interfaces, enp6s0f0 and enp6s0f1. We select enp6s0f1 as the interface which connect Internet. We can use &lt;code&gt;ethtool&lt;/code&gt; command to check whether the interface has been connected to the Internet.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ethtool enp6s0f1
+
+Settings &lt;span class="k"&gt;for&lt;/span&gt; enp6s0f1:
+    Supported ports: &lt;span class="o"&gt;[&lt;/span&gt; TP &lt;span class="o"&gt;]&lt;/span&gt;
+    Supported link modes:   10baseT/Half 10baseT/Full
+                            100baseT/Half 100baseT/Full
+                            1000baseT/Full
+    Supported pause frame use: Symmetric
+    Supports auto-negotiation: Yes
+    Advertised link modes:  10baseT/Half 10baseT/Full
+                            100baseT/Half 100baseT/Full
+                            1000baseT/Full
+    Advertised pause frame use: Symmetric
+    Advertised auto-negotiation: Yes
+    Speed: 1000Mb/s
+    Duplex: Full
+    Port: Twisted Pair
+    PHYAD: &lt;span class="m"&gt;1&lt;/span&gt;
+    Transceiver: internal
+    Auto-negotiation: on
+    MDI-X: off &lt;span class="o"&gt;(&lt;/span&gt;auto&lt;span class="o"&gt;)&lt;/span&gt;
+    Supports Wake-on: d
+    Wake-on: d
+    Current message level: 0x00000007 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;7&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+                   drv probe link
+    Link detected: yes &lt;span class="c1"&gt;# network cable connected&lt;/span&gt;
+
+$ ethtool enp6s0f0
+&lt;span class="c1"&gt;# similar output&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then we set the network parameters about the two interfaces.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ vi /etc/sysconfig/network-scripts/ifcfg-enp6s0f1
+
+&lt;span class="nv"&gt;TYPE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;Ethernet
+&lt;span class="nv"&gt;BOOTPROTO&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;static
+&lt;span class="nv"&gt;IPADDR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;your_own_internet_ip_address
+&lt;span class="nv"&gt;NETMASK&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;your_netmask
+&lt;span class="nv"&gt;GATEWAY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;your_getway
+&lt;span class="nv"&gt;NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;enp6s0f1
+&lt;span class="nv"&gt;UUID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1bb4d952-da42-4494-a43c-46ebc4442e0e
+&lt;span class="nv"&gt;DEVICE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;enp6s0f1
+&lt;span class="nv"&gt;ONBOOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;yes
+&lt;span class="nv"&gt;NETWORK&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="nv"&gt;BROADCAST&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+
+---------------------------
+
+$ vi /etc/sysconfig/network-scripts/ifcfg-enp6s0f0
+
+&lt;span class="nv"&gt;TYPE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;Ethernet
+&lt;span class="nv"&gt;BOOTPROTO&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;static
+&lt;span class="nv"&gt;IPADDR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;192&lt;/span&gt;.168.6.1
+&lt;span class="nv"&gt;NETMASK&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;255&lt;/span&gt;.255.255.0
+&lt;span class="nv"&gt;NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;enp6s0f0
+&lt;span class="nv"&gt;UUID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;c5469722-15c1-40b0-b033-fc45ef72c223
+&lt;span class="nv"&gt;DEVICE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;enp6s0f0
+&lt;span class="nv"&gt;ONBOOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;yes
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;NOTE: The LAN interface enp6s0f0 need not to set the "GATEWAY".&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Then we set the DNS servers.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vi /etc/resolv.conf
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And add your own DNS servers to the file. Then we set the hosts and hostname of the login node. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vi /etc/hosts &lt;span class="c1"&gt;# add the line below&lt;/span&gt;
+-----------------------------
+your_own_internet_ip_address your_loginNode_hostname &lt;span class="c1"&gt;# IP address and hostname of the Internet&lt;/span&gt;
+&lt;span class="m"&gt;192&lt;/span&gt;.168.6.1 master &lt;span class="c1"&gt;# IP address and hostname of the LAN&lt;/span&gt;
+
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;your_loginNode_hostname&amp;quot;&lt;/span&gt; &amp;gt; /etc/hostname
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then, we restart the network service.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;/etc/init.d/network restart
+
+&lt;span class="c1"&gt;# check the Internet&lt;/span&gt;
+ping -c4 bing.com
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Now, we can reboot the login node.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;shutdown -r now
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Basic Configuration&lt;/h2&gt;
+&lt;p&gt;Now, we can upgrade our system first time.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yum upgrade -y
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then, we install some necessarily used softwares using yum.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yum install -y wget net-tools vim
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And we add EPEL repository and OpenHPC repository to the system.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /tmp
+wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-10.noarch.rpm
+rpm -ivh epel-release-7-10.noarch.rpm
+yum install http://build.openhpc.community/OpenHPC:/1.3/CentOS_7/x86_64/ohpc-release-1.3-1.el7.x86_64.rpm
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;For the requirement for OpenHPC, we need disable by firewall.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;systemctl disable firewalld
+systemctl stop firewalld
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To save time, we can also install bash autocompletion tool.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yum install bash-completion-extras -y
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Finally, we upgrade the system again. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yum upgrade -y
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;In next post, we will install OpenHPC and configure the provisioning system which is the most powerful tool to construct the compute nodes. Stay tuned! &lt;/p&gt;</content><category term="HPC"></category><category term="cluster"></category><category term="Linux"></category></entry><entry><title>Build Your Own HPC Cluster: (1) Hardware Construction</title><link href="https://sun-rongyang.github.io/2018/build-your-own-hpc-cluster-1-hardware-construction.html" rel="alternate"></link><published>2018-02-18T09:23:00+08:00</published><updated>2018-02-18T09:23:00+08:00</updated><author><name>Sun Rongyang</name></author><id>tag:sun-rongyang.github.io,2018-02-18:/2018/build-your-own-hpc-cluster-1-hardware-construction.html</id><summary type="html">&lt;h2&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;High performance computing (HPC) Linux cluster is a powerful tool for scientific research. If you have a research group, it is very convenient to collect your computing resource by building a HPC cluster. In this &lt;code&gt;Build Your Own HPC Cluster&lt;/code&gt; series, I will introduce how to construct your own …&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;High performance computing (HPC) Linux cluster is a powerful tool for scientific research. If you have a research group, it is very convenient to collect your computing resource by building a HPC cluster. In this &lt;code&gt;Build Your Own HPC Cluster&lt;/code&gt; series, I will introduce how to construct your own HPC cluster using &lt;a href="https://www.centos.org"&gt;Centos 7&lt;/a&gt; Linux distribution and &lt;a href="https://openhpc.community"&gt;OpenHPC&lt;/a&gt; tools. I select &lt;a href="https://slurm.schedmd.com"&gt;Slurm&lt;/a&gt; as job scheduling system.&lt;/p&gt;
 &lt;p&gt;In the first post of the series, I will introduce something about hardware construction. Roughly, that is how to connect your &lt;em&gt;computers&lt;/em&gt; (nodes) together.&lt;/p&gt;
