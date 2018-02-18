@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="http://localhost:8000/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://localhost:8000/theme/pygments/solarized-dark.min.css">
+  <link rel="stylesheet" type="text/css" href="http://localhost:8000/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Sun Rongyang" />
+<meta name="description" content="Introduction High performance computing (HPC) Linux cluster is a powerful tool for scientific research. If you have a research group, it is very convenient to collect your computing resource by building a HPC cluster. In this Build Your Own HPC Cluster series, I will introduce how to construct your own …" />
+<meta name="keywords" content="HPC, cluster, Linux, hardware">
+
+<meta property="og:site_name" content="Sun Rongyang's Blog"/>
+<meta property="og:title" content="Build Your Own HPC Cluster: Hardware Construction"/>
+<meta property="og:description" content="Introduction High performance computing (HPC) Linux cluster is a powerful tool for scientific research. If you have a research group, it is very convenient to collect your computing resource by building a HPC cluster. In this Build Your Own HPC Cluster series, I will introduce how to construct your own …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://localhost:8000/2018/build-your-own-hpc-cluster-hardware-construction.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-02-18 09:23:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://localhost:8000/author/sun-rongyang.html">
+<meta property="article:section" content="HPC"/>
+<meta property="article:tag" content="HPC"/>
+<meta property="article:tag" content="cluster"/>
+<meta property="article:tag" content="Linux"/>
+<meta property="article:tag" content="hardware"/>
+<meta property="og:image" content="/images/avatar.jpg">
+
+  <title>Sun Rongyang's Blog &ndash; Build Your Own HPC Cluster: Hardware Construction</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="http://localhost:8000">
+        <img src="/images/avatar.jpg" alt="Sun Rongyang" title="Sun Rongyang">
+      </a>
+      <h1><a href="http://localhost:8000">Sun Rongyang</a></h1>
+
+
+
+      <ul class="social">
+        <li><a class="sc-envelope-o" href="mailto:sun-rongyang@outlook.com" target="_blank"><i class="fa fa-envelope-o"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/sun-rongyang" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="http://localhost:8000">    Home
+</a>
+
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="build-your-own-hpc-cluster-hardware-construction">Build Your Own HPC Cluster: Hardware Construction</h1>
+    <p>
+          Posted on Sun 18 February 2018 in <a href="http://localhost:8000/category/hpc.html">HPC</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <h2>Introduction</h2>
+<p>High performance computing (HPC) Linux cluster is a powerful tool for scientific research. If you have a research group, it is very convenient to collect your computing resource by building a HPC cluster. In this <code>Build Your Own HPC Cluster</code> series, I will introduce how to construct your own HPC cluster using <a href="https://www.centos.org">Centos 7</a> Linux distribution and <a href="https://openhpc.community">OpenHPC</a> tools. I select <a href="https://slurm.schedmd.com">Slurm</a> as job scheduling system.</p>
+<p>In the first post of the series, I will introduce something about hardware construction. Roughly, that is how to connect your <em>computers</em> (nodes) together.</p>
+<h2>Main node</h2>
+<p>Main node also called login node, control node or controller which is a computer has two network interfaces, and one of them connects to the Internet, the other connects to a network switch.</p>
+<h2>Compute node</h2>
+<p>Several computers with one network interface are as compute nodes. They are all connected to the same network switch.</p>
+<h2>Network structure</h2>
+<p>Now, we can connect all the nodes together. First, we select a network interface on the login node and connect it to the Internet. Then we connect the other network interface to the network switch. Finally, we connect all the network interfaces on compute nodes to the same network switch.</p>
+<h2>Conclusion</h2>
+<p>That is all requirement for hardware. In the next post, I will introduce how to install CentOS on the main node.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="http://localhost:8000/tag/hpc.html">HPC</a>
+      <a href="http://localhost:8000/tag/cluster.html">cluster</a>
+      <a href="http://localhost:8000/tag/linux.html">Linux</a>
+      <a href="http://localhost:8000/tag/hardware.html">hardware</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy; Sun Rongyang 2018</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Sun Rongyang's Blog ",
+  "url" : "http://localhost:8000",
+  "image": "/images/avatar.jpg",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
