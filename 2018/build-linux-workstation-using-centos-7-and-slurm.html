@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="http://localhost:8000/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://localhost:8000/theme/pygments/solarized-dark.min.css">
+  <link rel="stylesheet" type="text/css" href="http://localhost:8000/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Sun Rongyang" />
+<meta name="description" content="In this post, I will show you how to build a Linux development environment for high performance computation(HPC) on a workstation. In my early post, I have shown how to build a Linux HPC cluster based CentOS 7 and Slurm (although this serries is still updating :)~ ). For the workstation …" />
+<meta name="keywords" content="Linux, HPC, CentOS, slurm">
+
+<meta property="og:site_name" content="Sun Rongyang's Blog"/>
+<meta property="og:title" content="Build Linux Workstation Using CentOS 7 and Slurm"/>
+<meta property="og:description" content="In this post, I will show you how to build a Linux development environment for high performance computation(HPC) on a workstation. In my early post, I have shown how to build a Linux HPC cluster based CentOS 7 and Slurm (although this serries is still updating :)~ ). For the workstation …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://localhost:8000/2018/build-linux-workstation-using-centos-7-and-slurm.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-04-10 15:45:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://localhost:8000/author/sun-rongyang.html">
+<meta property="article:section" content="HPC"/>
+<meta property="article:tag" content="Linux"/>
+<meta property="article:tag" content="HPC"/>
+<meta property="article:tag" content="CentOS"/>
+<meta property="article:tag" content="slurm"/>
+<meta property="og:image" content="/images/avatar.jpg">
+
+  <title>Sun Rongyang's Blog &ndash; Build Linux Workstation Using CentOS 7 and Slurm</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="http://localhost:8000">
+        <img src="/images/avatar.jpg" alt="Sun Rongyang" title="Sun Rongyang">
+      </a>
+      <h1><a href="http://localhost:8000">Sun Rongyang</a></h1>
+
+
+
+      <ul class="social">
+        <li><a class="sc-envelope-o" href="mailto:sun-rongyang@outlook.com" target="_blank"><i class="fa fa-envelope-o"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/sun-rongyang" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="http://localhost:8000">    Home
+</a>
+
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="build-linux-workstation-using-centos-7-and-slurm">Build Linux Workstation Using CentOS 7 and Slurm</h1>
+    <p>
+          Posted on Tue 10 April 2018 in <a href="http://localhost:8000/category/hpc.html">HPC</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>In this post, I will show you how to build a Linux development environment for high performance computation(HPC) on a workstation. In my early post, I have shown how to build a Linux HPC cluster based CentOS 7 and Slurm (although this serries is still updating :)~ ). For the workstation case, it's much easy because you only have to consider one node. Like before, we configure the network first.</p>
+<h2>Basic configuration</h2>
+<h3>Network configuration</h3>
+<div class="highlight"><pre><span></span>vi /etc/sysconfig/network-scripts/ifcfg-NET_INTERFACE_NAME
+
+# change the following items
+----------------------------------------------------------
+TYPE=Ethernet
+BOOTPROTO=static
+IPADDR=YOUR_IPADDR
+GATEWAY=YOUR_GATEWAY
+NETMASK=YOUR_NETMASK
+ONBOOT=yes
+----------------------------------------------------------
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>echo &quot;nameserver YOUR_DNS_SERVER&quot; &gt;&gt; /etc/resolv.conf
+
+echo &quot;YOUR_IPADDR YOUR_HOST_NAME&quot; &gt;&gt; /etc/hosts
+
+echo &quot;YOUR_HOST_NAME&quot; &gt;&gt; /etc/hostname
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>/etc/init.d/network restart
+ping -c4 bing.com
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>shutdown -r now
+</pre></div>
+
+
+<h3>Build basic software enviroment</h3>
+<div class="highlight"><pre><span></span>yum update -y
+shutdown -r now
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>yum install epel-release -y
+yum groupinstall &quot;Development Tools&quot; -y
+yum install kernel-devel -y
+yum install dkms -y     #Dynamic Kernel Module Support
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>yum install htop -y
+yum install bash-completion-extras -y
+</pre></div>
+
+
+<p>install vim 8</p>
+<div class="highlight"><pre><span></span>curl -L https://copr.fedorainfracloud.org/coprs/mcepl/vim8/repo/epel-7/mcepl-vim8-epel-7.repo -o /etc/yum.repos.d/mcepl-vim8-epel-7.repo
+yum install vim -y
+</pre></div>
+
+
+<p>install python3</p>
+<div class="highlight"><pre><span></span>yum install yum-utils make wget
+yum-builddep python
+cd tmp &amp;&amp; wget https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tar.xz
+tar xf Python-3.6.5.tar.xz &amp;&amp; cd Python-3.6.5
+./configure --prefix=/usr/local --enable-shared LDFLAGS=&quot;-Wl,-rpath /usr/local/lib&quot;
+make
+make altinstall
+
+python3.6
+</pre></div>
+
+
+<p>install Intel compiler family</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="http://localhost:8000/tag/linux.html">Linux</a>
+      <a href="http://localhost:8000/tag/hpc.html">HPC</a>
+      <a href="http://localhost:8000/tag/centos.html">CentOS</a>
+      <a href="http://localhost:8000/tag/slurm.html">slurm</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy; Sun Rongyang 2018</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Sun Rongyang's Blog ",
+  "url" : "http://localhost:8000",
+  "image": "/images/avatar.jpg",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

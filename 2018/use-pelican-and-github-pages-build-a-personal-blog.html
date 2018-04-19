@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="http://localhost:8000/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="http://localhost:8000/theme/pygments/solarized-dark.min.css">
+  <link rel="stylesheet" type="text/css" href="http://localhost:8000/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Sun Rongyang" />
+<meta name="description" content="Installation Pelican is a static site generator, written by Python. Because Pelican is a python package at pypi (link), we can easily use pip to install it. pip3 install pelican Create github pages GitHub Pages lets you create static site for you or your project. GitHub will hosts the site …" />
+<meta name="keywords" content="python, web, markdown">
+
+<meta property="og:site_name" content="Sun Rongyang's Blog"/>
+<meta property="og:title" content="Use Pelican and Github Pages Build a Personal Blog"/>
+<meta property="og:description" content="Installation Pelican is a static site generator, written by Python. Because Pelican is a python package at pypi (link), we can easily use pip to install it. pip3 install pelican Create github pages GitHub Pages lets you create static site for you or your project. GitHub will hosts the site …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://localhost:8000/2018/use-pelican-and-github-pages-build-a-personal-blog.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-03-30 22:42:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://localhost:8000/author/sun-rongyang.html">
+<meta property="article:section" content="Python"/>
+<meta property="article:tag" content="python"/>
+<meta property="article:tag" content="web"/>
+<meta property="article:tag" content="markdown"/>
+<meta property="og:image" content="/images/avatar.jpg">
+
+  <title>Sun Rongyang's Blog &ndash; Use Pelican and Github Pages Build a Personal Blog</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="http://localhost:8000">
+        <img src="/images/avatar.jpg" alt="Sun Rongyang" title="Sun Rongyang">
+      </a>
+      <h1><a href="http://localhost:8000">Sun Rongyang</a></h1>
+
+
+
+      <ul class="social">
+        <li><a class="sc-envelope-o" href="mailto:sun-rongyang@outlook.com" target="_blank"><i class="fa fa-envelope-o"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/sun-rongyang" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="http://localhost:8000">    Home
+</a>
+
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="use-pelican-and-github-pages-build-a-personal-blog">Use Pelican and Github Pages Build a Personal Blog</h1>
+    <p>
+          Posted on Fri 30 March 2018 in <a href="http://localhost:8000/category/python.html">Python</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <!--Status: draft-->
+
+<h2>Installation</h2>
+<p><a href="https://blog.getpelican.com">Pelican</a> is a static site generator, written by Python. Because Pelican is a python package at pypi (<a href="https://pypi.python.org/pypi/pelican/">link</a>), we can easily use <code>pip</code> to install it.</p>
+<div class="highlight"><pre><span></span>pip3 install pelican
+</pre></div>
+
+
+<h2>Create github pages</h2>
+<p><a href="https://pages.github.com">GitHub Pages</a> lets you create static site for you or your project. GitHub will hosts the site and you can avoid constructing your own server. It is suitable for someone does not have enough time to maintain the web server and lets you focus on the content. It is easy to create a GitHub pages by creating a new repository named as <code>user-name.github.io</code>. Here <code>user-name</code> is the user name for your GitHub's account. My GitHub user name is <code>sun-rongyang</code>, so my GitHub pages url is <code>sun-rongyang.github.io</code>.</p>
+<h2>Initialize the blog site</h2>
+<p>First, create the root path of the project:</p>
+<div class="highlight"><pre><span></span>mkdir blog-src
+</pre></div>
+
+
+<p>Then go into the path and run <code>pelican-quickstart</code> to create a site quickly.</p>
+<div class="highlight"><pre><span></span>cd blog-src &amp;&amp; pelican-quickstart
+</pre></div>
+
+
+<p>Pelican will ask some questions about the site you want to create and generate needed structure of the site. The questions may like this:</p>
+<div class="highlight"><pre><span></span>Welcome to pelican-quickstart v3.7.1.
+
+This script will help you create a new Pelican-based website.
+
+Please answer the following questions so this script can generate the files
+needed by Pelican.
+
+
+&gt; Where do you want to create your new web site? [.]
+&gt; What will be the title of this web site? Test site
+&gt; Who will be the author of this web site? username
+&gt; What will be the default language of this web site? [English]
+&gt; Do you want to specify a URL prefix? e.g., http://example.com   (Y/n) Y
+&gt; What is your URL prefix? (see above example; no trailing slash) https://username.github.io
+&gt; Do you want to enable article pagination? (Y/n) n
+&gt; What is your time zone? [Europe/Paris]
+&gt; Do you want to generate a Fabfile/Makefile to automate generation and publishing? (Y/n) Y
+&gt; Do you want an auto-reload &amp; simpleHTTP script to assist with theme and site development? (Y/n) Y
+&gt; Do you want to upload your website using FTP? (y/N) N
+&gt; Do you want to upload your website using SSH? (y/N) N
+&gt; Do you want to upload your website using Dropbox? (y/N) N
+&gt; Do you want to upload your website using S3? (y/N) N
+&gt; Do you want to upload your website using Rackspace Cloud Files? (y/N) N
+&gt; Do you want to upload your website using GitHub Pages? (y/N) y
+&gt; Is this your personal page (username.github.io)? (y/N) y
+Done. Your new project is available at /Users/thorough/Thorough/developments/Projects/blog-src/test
+</pre></div>
+
+
+<p>And the files structure may like this:</p>
+<div class="highlight"><pre><span></span>.
+|-- Makefile
+|-- content/
+|-- develop_server.sh
+|-- fabfile.py
+|-- output/
+|-- pelicanconf.py
+`-- publishconf.py
+</pre></div>
+
+
+<p>where <code>content</code> contains markdown files which you want to post and <code>output</code> is the root folder for your site. The <code>develop_server.sh</code> script can start/stop a temporary web server for development. The main configuration file is <code>pelicanconf.py</code>.</p>
+<h2>Write blog article</h2>
+<p>You can write down your blog using <code>markdown</code> or <code>rst</code>. If you use <code>rst</code>, you need not do any thing. But if you use <code>markdown</code> like me, you need install related python package first.</p>
+<div class="highlight"><pre><span></span>pip3 install markdown
+</pre></div>
+
+
+<p>Then you can write down your first blog. Create a <code>markdown</code> file called <code>my-frist-post.md</code> in <code>content</code> folder.</p>
+<div class="highlight"><pre><span></span>touch content/my-first-post.md
+</pre></div>
+
+
+<p>We need write the first few lines under a special format, because Pelican will read these lines to set metadata of the article. The file head may seems like</p>
+<div class="highlight"><pre><span></span><span class="n">Title</span><span class="o">:</span> <span class="n">My</span> <span class="n">First</span> <span class="n">Post</span>
+<span class="n">Date</span><span class="o">:</span> <span class="mi">2018</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">06</span> <span class="mi">23</span><span class="o">:</span><span class="mi">09</span>
+<span class="n">Category</span><span class="o">:</span> <span class="n">Web</span>
+<span class="n">Tags</span><span class="o">:</span> <span class="n">python</span><span class="o">,</span> <span class="n">web</span><span class="o">,</span> <span class="n">markdown</span>
+</pre></div>
+
+
+<p>Following these lines, you can write the content of your blog article. When you finish your blog article, you can generate the <code>html</code> files of your website using</p>
+<div class="highlight"><pre><span></span>make html
+</pre></div>
+
+
+<p>And you can also use the <code>develop_server.sh</code> script to start/stop a temporary http server. </p>
+<h2>Use themes</h2>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="http://localhost:8000/tag/python.html">python</a>
+      <a href="http://localhost:8000/tag/web.html">web</a>
+      <a href="http://localhost:8000/tag/markdown.html">markdown</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy; Sun Rongyang 2018</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Sun Rongyang's Blog ",
+  "url" : "http://localhost:8000",
+  "image": "/images/avatar.jpg",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
