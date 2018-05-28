@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="https://sun-rongyang.github.io/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://sun-rongyang.github.io/theme/pygments/solarized-dark.min.css">
+  <link rel="stylesheet" type="text/css" href="https://sun-rongyang.github.io/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="https://sun-rongyang.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Sun Rongyang's Blog Atom">
+
+
+
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333333">
+
+<meta name="author" content="Sun Rongyang" />
+<meta name="description" content="Server (To be continued) Basic configuration Set some custom usage for bash. yum install wget wget -o /etc/profile.d/bashrc_global.sh https://raw.githubusercontent.com/sun-rongyang/dotfiles/master/OnLinux/general/bashrc_global.sh bash Use SSH key to log in the server. vi ./ssh/authorized_keys Change SSH port and forbidden …" />
+<meta name="keywords" content="Web, Linux, CentOS, Windows, MacOS, IOS, Android, v2ray">
+
+<meta property="og:site_name" content="Sun Rongyang's Blog"/>
+<meta property="og:title" content="V2Ray Configuration"/>
+<meta property="og:description" content="Server (To be continued) Basic configuration Set some custom usage for bash. yum install wget wget -o /etc/profile.d/bashrc_global.sh https://raw.githubusercontent.com/sun-rongyang/dotfiles/master/OnLinux/general/bashrc_global.sh bash Use SSH key to log in the server. vi ./ssh/authorized_keys Change SSH port and forbidden …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://sun-rongyang.github.io/2018/v2ray-configuration.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-04-30 16:06:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://sun-rongyang.github.io/author/sun-rongyang.html">
+<meta property="article:section" content="Web"/>
+<meta property="article:tag" content="Web"/>
+<meta property="article:tag" content="Linux"/>
+<meta property="article:tag" content="CentOS"/>
+<meta property="article:tag" content="Windows"/>
+<meta property="article:tag" content="MacOS"/>
+<meta property="article:tag" content="IOS"/>
+<meta property="article:tag" content="Android"/>
+<meta property="article:tag" content="v2ray"/>
+<meta property="og:image" content="/images/avatar.jpg">
+
+  <title>Sun Rongyang's Blog &ndash; V2Ray Configuration</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="https://sun-rongyang.github.io">
+        <img src="/images/avatar.jpg" alt="Sun Rongyang" title="Sun Rongyang">
+      </a>
+      <h1><a href="https://sun-rongyang.github.io">Sun Rongyang</a></h1>
+
+
+
+      <ul class="social">
+        <li><a class="sc-envelope-o" href="mailto:sun-rongyang@outlook.com" target="_blank"><i class="fa fa-envelope-o"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/sun-rongyang" target="_blank"><i class="fa fa-github"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://sun-rongyang.github.io">    Home
+</a>
+
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://sun-rongyang.github.io/feeds/all.atom.xml">    Atom
+</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="v2ray-configuration">V2Ray Configuration</h1>
+    <p>
+          Posted on Mon 30 April 2018 in <a href="https://sun-rongyang.github.io/category/web.html">Web</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <h2>Server (To be continued)</h2>
+<h3>Basic configuration</h3>
+<p>Set some custom usage for bash.</p>
+<div class="highlight"><pre><span></span>yum install wget
+wget -o /etc/profile.d/bashrc_global.sh https://raw.githubusercontent.com/sun-rongyang/dotfiles/master/OnLinux/general/bashrc_global.sh
+bash
+</pre></div>
+
+
+<p>Use SSH key to log in the server.</p>
+<div class="highlight"><pre><span></span>vi ./ssh/authorized_keys
+</pre></div>
+
+
+<p>Change SSH port and forbidden root password log in.</p>
+<div class="highlight"><pre><span></span>vi /etc/ssh/sshd_config
+</pre></div>
+
+
+<p>change the following item.</p>
+<div class="highlight"><pre><span></span>...
+
+Port SSH_PORT   # change ssh port
+
+...
+
+# forbid root password log in.
+Match User root
+    PasswordAuthentication no
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>sestatus
+semanage port -a -t ssh_port_t -p tcp SSH_PORT
+systemctl restart sshd
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>yum upgrade -y
+yum install vim -y
+yum install epel-release -y
+yum groupinstall <span class="s2">&quot;Development Tools&quot;</span> -y
+yum install kernel-devel -y
+yum install dkms -y     <span class="c1"># Dynamic Kernel Module Support</span>
+yum install htop -y
+yum install bash-completion-extras -y
+yum install git -y
+</pre></div>
+
+
+<h3>Install V2Ray</h3>
+<div class="highlight"><pre><span></span>bash &lt;<span class="o">(</span>curl -L -s https://install.direct/go.sh<span class="o">)</span>
+</pre></div>
+
+
+<h3>Configure V2Ray</h3>
+<h4>Time</h4>
+<div class="highlight"><pre><span></span>yum install ntp -y
+ntpdate time.nist.gov
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>crontab -e
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>* */2 * * * ntpdate time.nist.gov
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>systemctl restart crond
+</pre></div>
+
+
+<h4>Configuration file</h4>
+<div class="highlight"><pre><span></span>vim /etc/v2ray/config.json
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;log&quot;</span> <span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;access&quot;</span><span class="p">:</span> <span class="s2">&quot;/var/log/v2ray/access.log&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;/var/log/v2ray/error.log&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;loglevel&quot;</span><span class="p">:</span> <span class="s2">&quot;warning&quot;</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;inbound&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="err">V</span><span class="mi">2</span><span class="err">RAY_LISTEN_PORT</span><span class="p">,</span>
+    <span class="nt">&quot;protocol&quot;</span><span class="p">:</span> <span class="s2">&quot;vmess&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;settings&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;clients&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;YOUR_UUID&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;level&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+          <span class="nt">&quot;alterId&quot;</span><span class="p">:</span> <span class="mi">64</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;outbound&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;protocol&quot;</span><span class="p">:</span> <span class="s2">&quot;freedom&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;settings&quot;</span><span class="p">:</span> <span class="p">{}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h4>Setup</h4>
+<div class="highlight"><pre><span></span>systemctl status v2ray
+
+netstat -plnt <span class="p">|</span> grep v2ray
+</pre></div>
+
+
+<h2>Client</h2>
+<p>Check the time of your client device first.</p>
+<h3>Windows</h3>
+<ul>
+<li>Create a new folder at any path you want with any name to contain client app and data. I use <code>V2RayN</code> here.</li>
+<li>Download the newest version client app <a href="https://github.com/2dust/v2rayN">V2RayN</a>. Go to <a href="https://github.com/2dust/v2rayN/releases">V2RayN-release</a>, select a version and download related <code>v2rayN.exe</code> file to <code>V2RayN</code> folder.</li>
+<li>Download <code>v2ray</code> core for Windows. Go to <a href="https://github.com/v2ray/v2ray-core/releases">v2ray-core-release</a>, select a version and download related <code>v2ray-windows-64.zip</code> file. Then extract to <code>V2RayN</code> folder.</li>
+<li>Go to <code>V2RayN</code> folder and <code>double click v2rayN</code> to setup the client. If you meet some problem, you should check whether the version of your <code>.NET framework</code> is larger than 4.5. If everything goes right, you can find an icon at lower right system tray.</li>
+<li><code>click</code> the icon =&gt; <code>Server</code>(<code>服务器</code>) =&gt; <code>Add [VMess] server</code>(<code>添加[VMess]服务器</code>)</li>
+<li>Set parameters which include <code>address</code>, <code>port</code>, <code>id</code>, <code>alterId</code> and <code>remarks</code>. Then <code>click</code> <code>OK</code> to save the configuration.</li>
+<li><code>right click</code> the icon at system tray. Check the first item to turn on the proxy. You can chose proxy mode in the second item. It is sensible to select <code>PAC mode</code>. You can switch server in the third item.</li>
+<li>Download and install <code>firefox</code> brower.</li>
+<li>Setup <code>firefox</code> brower.</li>
+<li><code>click</code> <code>open menu</code> icon at upper right =&gt; <code>Options</code> =&gt; <code>Network Proxy</code>/<code>Settings...</code> =&gt; select <code>Manual proxy configuration</code> =&gt; Set <code>SOCKS Host</code> as <code>127.0.0.1</code> and set <code>Port</code> as <code>1080</code> =&gt; check <code>Proxy DNS when using SOCKS v5</code> at the last line =&gt; <code>OK</code>.</li>
+</ul>
+<h3>MacOS X</h3>
+<ul>
+<li>
+<p>Download the newest version <a href="https://github.com/Cenmrev/V2RayX/">V2RayX</a>. Go to <a href="https://github.com/Cenmrev/V2RayX/releases">V2RayX-release</a>, select a version and download <code>.app.zip</code> file.</p>
+</li>
+<li>
+<p>Move the <code>V2RayX</code> application to <code>Applications</code> folder and <code>right click</code> =&gt; <code>Open</code>. If you meet any permission request or something like that, enter Mac's password and click <code>install</code>/<code>next</code>. If you do not meet any problem, you will see an icon at the status bar.</p>
+</li>
+<li>
+<p><code>click the icon</code> =&gt; <code>Configure...</code>, You will see the dialog box. Set parameters as in the following image:</p>
+</li>
+</ul>
+<p><img alt="" src="https://sun-rongyang.github.io/2018/figure/v2rayx-config-OSX-1.png"></p>
+<ul>
+<li><code>click the icon</code> =&gt; <code>Servers</code>, select the server you configured at the last step. Finally, select <code>V2Ray Rules</code> to turn on the smart agent mode.</li>
+</ul>
+<h3>IOS</h3>
+<p>Go to <code>App Store</code> and download <code>Kitsunebi</code>. Then configure the server as following images:</p>
+<ul>
+<li><strong>Step 1, 4, 5</strong>:</li>
+</ul>
+<p><img alt="" src="https://sun-rongyang.github.io/2018/figure/v2rayx-config-IOS-1.png"></p>
+<ul>
+<li><strong>Step 2</strong>:</li>
+</ul>
+<p><img alt="" src="https://sun-rongyang.github.io/2018/figure/v2rayx-config-IOS-2.png"></p>
+<ul>
+<li><strong>Step 3</strong>: scan a QR code to add a server.</li>
+</ul>
+<p><img alt="" src="https://sun-rongyang.github.io/2018/figure/v2rayx-config-IOS-3.png"></p>
+<h3>Android</h3>
+<p>I do not have any Android device. But I find an active updated client for Android device, <a href="https://github.com/2dust/v2rayNG/releases">v2rayNG</a>, you can try it.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://sun-rongyang.github.io/tag/web.html">Web</a>
+      <a href="https://sun-rongyang.github.io/tag/linux.html">Linux</a>
+      <a href="https://sun-rongyang.github.io/tag/centos.html">CentOS</a>
+      <a href="https://sun-rongyang.github.io/tag/windows.html">Windows</a>
+      <a href="https://sun-rongyang.github.io/tag/macos.html">MacOS</a>
+      <a href="https://sun-rongyang.github.io/tag/ios.html">IOS</a>
+      <a href="https://sun-rongyang.github.io/tag/android.html">Android</a>
+      <a href="https://sun-rongyang.github.io/tag/v2ray.html">v2ray</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
+</article>
+
+    <footer>
+<p>&copy; Sun Rongyang 2018</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Sun Rongyang's Blog ",
+  "url" : "https://sun-rongyang.github.io",
+  "image": "/images/avatar.jpg",
+  "description": ""
+}
+</script>
+
+</body>
+</html>

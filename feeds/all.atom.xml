@@ -1,5 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Sun Rongyang's Blog</title><link href="https://sun-rongyang.github.io/" rel="alternate"></link><link href="https://sun-rongyang.github.io/feeds/all.atom.xml" rel="self"></link><id>https://sun-rongyang.github.io/</id><updated>2018-04-18T23:01:00+08:00</updated><entry><title>Recent DMRG Study for Finite Doped t-J Ladder</title><link href="https://sun-rongyang.github.io/2018/recent-dmrg-study-for-finite-doped-t-j-ladder.html" rel="alternate"></link><published>2018-04-18T23:01:00+08:00</published><updated>2018-04-18T23:01:00+08:00</updated><author><name>Sun Rongyang</name></author><id>tag:sun-rongyang.github.io,2018-04-18:/2018/recent-dmrg-study-for-finite-doped-t-j-ladder.html</id><summary type="html">&lt;p&gt;In this post, I attach the slides which collects the main simulation results in two recent DMRG papers &lt;a href="https://arxiv.org/abs/1804.00670"&gt;1804.00670&lt;/a&gt; and &lt;a href="https://arxiv.org/abs/1803.11342"&gt;1803.11342&lt;/a&gt;. I show it in the April 17 group meeting.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Sun Rongyang's Blog</title><link href="https://sun-rongyang.github.io/" rel="alternate"></link><link href="https://sun-rongyang.github.io/feeds/all.atom.xml" rel="self"></link><id>https://sun-rongyang.github.io/</id><updated>2018-04-30T16:06:00+08:00</updated><entry><title>V2Ray Configuration</title><link href="https://sun-rongyang.github.io/2018/v2ray-configuration.html" rel="alternate"></link><published>2018-04-30T16:06:00+08:00</published><updated>2018-04-30T16:06:00+08:00</updated><author><name>Sun Rongyang</name></author><id>tag:sun-rongyang.github.io,2018-04-30:/2018/v2ray-configuration.html</id><summary type="html">&lt;h2&gt;Server (To be continued)&lt;/h2&gt;
+&lt;h3&gt;Basic configuration&lt;/h3&gt;
+&lt;p&gt;Set some custom usage for bash.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yum install wget
+wget -o /etc/profile.d/bashrc_global.sh https://raw.githubusercontent.com/sun-rongyang/dotfiles/master/OnLinux/general/bashrc_global.sh
+bash
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Use SSH key to log in the server.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vi ./ssh/authorized_keys
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Change SSH port and forbidden …&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Server (To be continued)&lt;/h2&gt;
+&lt;h3&gt;Basic configuration&lt;/h3&gt;
+&lt;p&gt;Set some custom usage for bash.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yum install wget
+wget -o /etc/profile.d/bashrc_global.sh https://raw.githubusercontent.com/sun-rongyang/dotfiles/master/OnLinux/general/bashrc_global.sh
+bash
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Use SSH key to log in the server.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vi ./ssh/authorized_keys
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Change SSH port and forbidden root password log in.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vi /etc/ssh/sshd_config
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;change the following item.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;...
+
+Port SSH_PORT   # change ssh port
+
+...
+
+# forbid root password log in.
+Match User root
+    PasswordAuthentication no
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sestatus
+semanage port -a -t ssh_port_t -p tcp SSH_PORT
+systemctl restart sshd
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yum upgrade -y
+yum install vim -y
+yum install epel-release -y
+yum groupinstall &lt;span class="s2"&gt;&amp;quot;Development Tools&amp;quot;&lt;/span&gt; -y
+yum install kernel-devel -y
+yum install dkms -y     &lt;span class="c1"&gt;# Dynamic Kernel Module Support&lt;/span&gt;
+yum install htop -y
+yum install bash-completion-extras -y
+yum install git -y
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Install V2Ray&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;bash &amp;lt;&lt;span class="o"&gt;(&lt;/span&gt;curl -L -s https://install.direct/go.sh&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Configure V2Ray&lt;/h3&gt;
+&lt;h4&gt;Time&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yum install ntp -y
+ntpdate time.nist.gov
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;crontab -e
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;* */2 * * * ntpdate time.nist.gov
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;systemctl restart crond
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;Configuration file&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;vim /etc/v2ray/config.json
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;quot;log&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;access&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;/var/log/v2ray/access.log&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;error&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;/var/log/v2ray/error.log&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;loglevel&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;warning&amp;quot;&lt;/span&gt;
+  &lt;span class="p"&gt;},&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;quot;inbound&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;port&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="err"&gt;V&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="err"&gt;RAY_LISTEN_PORT&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;protocol&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;vmess&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;settings&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="nt"&gt;&amp;quot;clients&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;quot;id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;YOUR_UUID&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;quot;level&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="nt"&gt;&amp;quot;alterId&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;64&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+      &lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;},&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;quot;outbound&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;protocol&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;freedom&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;settings&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;Setup&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;systemctl status v2ray
+
+netstat -plnt &lt;span class="p"&gt;|&lt;/span&gt; grep v2ray
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Client&lt;/h2&gt;
+&lt;p&gt;Check the time of your client device first.&lt;/p&gt;
+&lt;h3&gt;Windows&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Create a new folder at any path you want with any name to contain client app and data. I use &lt;code&gt;V2RayN&lt;/code&gt; here.&lt;/li&gt;
+&lt;li&gt;Download the newest version client app &lt;a href="https://github.com/2dust/v2rayN"&gt;V2RayN&lt;/a&gt;. Go to &lt;a href="https://github.com/2dust/v2rayN/releases"&gt;V2RayN-release&lt;/a&gt;, select a version and download related &lt;code&gt;v2rayN.exe&lt;/code&gt; file to &lt;code&gt;V2RayN&lt;/code&gt; folder.&lt;/li&gt;
+&lt;li&gt;Download &lt;code&gt;v2ray&lt;/code&gt; core for Windows. Go to &lt;a href="https://github.com/v2ray/v2ray-core/releases"&gt;v2ray-core-release&lt;/a&gt;, select a version and download related &lt;code&gt;v2ray-windows-64.zip&lt;/code&gt; file. Then extract to &lt;code&gt;V2RayN&lt;/code&gt; folder.&lt;/li&gt;
+&lt;li&gt;Go to &lt;code&gt;V2RayN&lt;/code&gt; folder and &lt;code&gt;double click v2rayN&lt;/code&gt; to setup the client. If you meet some problem, you should check whether the version of your &lt;code&gt;.NET framework&lt;/code&gt; is larger than 4.5. If everything goes right, you can find an icon at lower right system tray.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;click&lt;/code&gt; the icon =&amp;gt; &lt;code&gt;Server&lt;/code&gt;(&lt;code&gt;服务器&lt;/code&gt;) =&amp;gt; &lt;code&gt;Add [VMess] server&lt;/code&gt;(&lt;code&gt;添加[VMess]服务器&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Set parameters which include &lt;code&gt;address&lt;/code&gt;, &lt;code&gt;port&lt;/code&gt;, &lt;code&gt;id&lt;/code&gt;, &lt;code&gt;alterId&lt;/code&gt; and &lt;code&gt;remarks&lt;/code&gt;. Then &lt;code&gt;click&lt;/code&gt; &lt;code&gt;OK&lt;/code&gt; to save the configuration.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;right click&lt;/code&gt; the icon at system tray. Check the first item to turn on the proxy. You can chose proxy mode in the second item. It is sensible to select &lt;code&gt;PAC mode&lt;/code&gt;. You can switch server in the third item.&lt;/li&gt;
+&lt;li&gt;Download and install &lt;code&gt;firefox&lt;/code&gt; brower.&lt;/li&gt;
+&lt;li&gt;Setup &lt;code&gt;firefox&lt;/code&gt; brower.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;click&lt;/code&gt; &lt;code&gt;open menu&lt;/code&gt; icon at upper right =&amp;gt; &lt;code&gt;Options&lt;/code&gt; =&amp;gt; &lt;code&gt;Network Proxy&lt;/code&gt;/&lt;code&gt;Settings...&lt;/code&gt; =&amp;gt; select &lt;code&gt;Manual proxy configuration&lt;/code&gt; =&amp;gt; Set &lt;code&gt;SOCKS Host&lt;/code&gt; as &lt;code&gt;127.0.0.1&lt;/code&gt; and set &lt;code&gt;Port&lt;/code&gt; as &lt;code&gt;1080&lt;/code&gt; =&amp;gt; check &lt;code&gt;Proxy DNS when using SOCKS v5&lt;/code&gt; at the last line =&amp;gt; &lt;code&gt;OK&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;MacOS X&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Download the newest version &lt;a href="https://github.com/Cenmrev/V2RayX/"&gt;V2RayX&lt;/a&gt;. Go to &lt;a href="https://github.com/Cenmrev/V2RayX/releases"&gt;V2RayX-release&lt;/a&gt;, select a version and download &lt;code&gt;.app.zip&lt;/code&gt; file.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Move the &lt;code&gt;V2RayX&lt;/code&gt; application to &lt;code&gt;Applications&lt;/code&gt; folder and &lt;code&gt;right click&lt;/code&gt; =&amp;gt; &lt;code&gt;Open&lt;/code&gt;. If you meet any permission request or something like that, enter Mac's password and click &lt;code&gt;install&lt;/code&gt;/&lt;code&gt;next&lt;/code&gt;. If you do not meet any problem, you will see an icon at the status bar.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;click the icon&lt;/code&gt; =&amp;gt; &lt;code&gt;Configure...&lt;/code&gt;, You will see the dialog box. Set parameters as in the following image:&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="" src="https://sun-rongyang.github.io/2018/figure/v2rayx-config-OSX-1.png"&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;click the icon&lt;/code&gt; =&amp;gt; &lt;code&gt;Servers&lt;/code&gt;, select the server you configured at the last step. Finally, select &lt;code&gt;V2Ray Rules&lt;/code&gt; to turn on the smart agent mode.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;IOS&lt;/h3&gt;
+&lt;p&gt;Go to &lt;code&gt;App Store&lt;/code&gt; and download &lt;code&gt;Kitsunebi&lt;/code&gt;. Then configure the server as following images:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Step 1, 4, 5&lt;/strong&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="" src="https://sun-rongyang.github.io/2018/figure/v2rayx-config-IOS-1.png"&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Step 2&lt;/strong&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="" src="https://sun-rongyang.github.io/2018/figure/v2rayx-config-IOS-2.png"&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Step 3&lt;/strong&gt;: scan a QR code to add a server.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="" src="https://sun-rongyang.github.io/2018/figure/v2rayx-config-IOS-3.png"&gt;&lt;/p&gt;
+&lt;h3&gt;Android&lt;/h3&gt;
+&lt;p&gt;I do not have any Android device. But I find an active updated client for Android device, &lt;a href="https://github.com/2dust/v2rayNG/releases"&gt;v2rayNG&lt;/a&gt;, you can try it.&lt;/p&gt;</content><category term="Web"></category><category term="Linux"></category><category term="CentOS"></category><category term="Windows"></category><category term="MacOS"></category><category term="IOS"></category><category term="Android"></category><category term="v2ray"></category></entry><entry><title>Recent DMRG Study for Finite Doped t-J Ladder</title><link href="https://sun-rongyang.github.io/2018/recent-dmrg-study-for-finite-doped-t-j-ladder.html" rel="alternate"></link><published>2018-04-18T23:01:00+08:00</published><updated>2018-04-18T23:01:00+08:00</updated><author><name>Sun Rongyang</name></author><id>tag:sun-rongyang.github.io,2018-04-18:/2018/recent-dmrg-study-for-finite-doped-t-j-ladder.html</id><summary type="html">&lt;p&gt;In this post, I attach the slides which collects the main simulation results in two recent DMRG papers &lt;a href="https://arxiv.org/abs/1804.00670"&gt;1804.00670&lt;/a&gt; and &lt;a href="https://arxiv.org/abs/1803.11342"&gt;1803.11342&lt;/a&gt;. I show it in the April 17 group meeting.&lt;/p&gt;
 &lt;iframe src="https://sun-rongyang.github.io/2018/pdf/recent-DMRG-study-for-finite-doped-tJ-ladder.pdf" style="width:100%; height:600px;" frameborder="0"&gt;&lt;/iframe&gt;</summary><content type="html">&lt;p&gt;In this post, I attach the slides which collects the main simulation results in two recent DMRG papers &lt;a href="https://arxiv.org/abs/1804.00670"&gt;1804.00670&lt;/a&gt; and &lt;a href="https://arxiv.org/abs/1803.11342"&gt;1803.11342&lt;/a&gt;. I show it in the April 17 group meeting.&lt;/p&gt;
 &lt;iframe src="https://sun-rongyang.github.io/2018/pdf/recent-DMRG-study-for-finite-doped-tJ-ladder.pdf" style="width:100%; height:600px;" frameborder="0"&gt;&lt;/iframe&gt;</content><category term="physics"></category><category term="research"></category><category term="DMRG"></category><category term="group-meeting"></category></entry><entry><title>Build Your Own HPC Cluster: (2) Configure Linux on Main Node</title><link href="https://sun-rongyang.github.io/2018/build-your-own-hpc-cluster-2-configure-linux-on-main-node.html" rel="alternate"></link><published>2018-02-18T20:08:00+08:00</published><updated>2018-02-18T20:08:00+08:00</updated><author><name>Sun Rongyang</name></author><id>tag:sun-rongyang.github.io,2018-02-18:/2018/build-your-own-hpc-cluster-2-configure-linux-on-main-node.html</id><summary type="html">&lt;h2&gt;Install CentOS 7 on the main node&lt;/h2&gt;
 &lt;p&gt;Installation of CentOS 7 is very straightforward. What I want to consider here is something need be noticed. For the hard disk partitioning, your plan should seems like:&lt;/p&gt;
