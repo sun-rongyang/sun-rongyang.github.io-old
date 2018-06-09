@@ -31,18 +31,26 @@
     <!-- Microsoft EDGE -->
     <meta name="msapplication-TileColor" content="#333333">
 
-    <meta name="author" content="Sun Rongyang" />
-    <meta name="description" content="" />
+<meta name="author" content="Sun Rongyang" />
+<meta name="description" content="GoogleTest is an awesome C++ testing framework. It is easy to install and use. First, download GoogleTest from github. git clone https://github.com/google/googletest.git gtest cd gtest Then, use cmake to build the GoogleTest. mkdir build cd build cmake .. Use ccmake . to turn on a project cmake …" />
+<meta name="keywords" content="c++, testing, TDD">
+
 <meta property="og:site_name" content="Sun Rongyang's Blog"/>
-<meta property="og:type" content="blog"/>
-<meta property="og:title" content="Sun Rongyang's Blog"/>
-<meta property="og:description" content=""/>
+<meta property="og:title" content="Install GoogleTest on Mac OSX"/>
+<meta property="og:description" content="GoogleTest is an awesome C++ testing framework. It is easy to install and use. First, download GoogleTest from github. git clone https://github.com/google/googletest.git gtest cd gtest Then, use cmake to build the GoogleTest. mkdir build cd build cmake .. Use ccmake . to turn on a project cmake …"/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="https://sun-rongyang.github.io"/>
+<meta property="og:url" content="https://sun-rongyang.github.io/2018/install-googletest-on-mac-osx.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-06-09 19:43:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://sun-rongyang.github.io/author/sun-rongyang.html">
+<meta property="article:section" content="C++"/>
+<meta property="article:tag" content="c++"/>
+<meta property="article:tag" content="testing"/>
+<meta property="article:tag" content="TDD"/>
 <meta property="og:image" content="/images/avatar.jpg">
 
-  <title>Sun Rongyang's Blog &ndash;     Tags
-</title>
+  <title>Sun Rongyang's Blog &ndash; Install GoogleTest on Mac OSX</title>
 
 </head>
 <body>
@@ -80,33 +88,55 @@
 
 <article class="single">
   <header>
-    <h1>    Tags
-</h1>
+      
+    <h1 id="install-googletest-on-mac-osx">Install GoogleTest on Mac OSX</h1>
+    <p>
+          Posted on Sat 09 June 2018 in <a href="https://sun-rongyang.github.io/category/c.html">C++</a>
+
+
+    </p>
   </header>
+
+
   <div>
-    <ul class="list">          <li><a href="https://sun-rongyang.github.io/tag/android.html">Android</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/c.html">c++</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/centos.html">CentOS</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/cluster.html">cluster</a> (2)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/dmrg.html">DMRG</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/group-meeting.html">group-meeting</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/hardware.html">hardware</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/hpc.html">HPC</a> (2)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/ios.html">IOS</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/linux.html">Linux</a> (4)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/mac.html">Mac</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/macos.html">MacOS</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/osx.html">OSX</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/physics.html">physics</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/research.html">research</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/tdd.html">TDD</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/testing.html">testing</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/v2ray.html">v2ray</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/vm.html">VM</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/web.html">Web</a> (1)</li>
-          <li><a href="https://sun-rongyang.github.io/tag/windows.html">Windows</a> (1)</li>
-    </ul>
+    <p>GoogleTest is an awesome C++ testing framework. It is easy to install and use.</p>
+<p>First, download GoogleTest from github.</p>
+<div class="highlight"><pre><span></span>git clone https://github.com/google/googletest.git gtest
+<span class="nb">cd</span> gtest
+</pre></div>
+
+
+<p>Then, use <code>cmake</code> to build the GoogleTest.</p>
+<div class="highlight"><pre><span></span>mkdir build
+<span class="nb">cd</span> build
+cmake ..
+</pre></div>
+
+
+<p>Use <code>ccmake .</code> to turn on a project cmake configuration TUI. Using the TUI, set <code>BUILD_GTEST: ON</code> and change <code>CMAKE_INSTALL_PREFIX</code>.
+Finally, compile and install.</p>
+<div class="highlight"><pre><span></span>make
+sudo make install
+</pre></div>
+
+
+<p>To use the GoogleTest, compile you own testing file by adding the following compiler argument:</p>
+<div class="highlight"><pre><span></span>g++ -lgtest -lgtest_main
+</pre></div>
   </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://sun-rongyang.github.io/tag/c.html">c++</a>
+      <a href="https://sun-rongyang.github.io/tag/testing.html">testing</a>
+      <a href="https://sun-rongyang.github.io/tag/tdd.html">TDD</a>
+    </p>
+  </div>
+
+
+
+    <div class="addthis_relatedposts_inline">
+
+
 </article>
 
     <footer>

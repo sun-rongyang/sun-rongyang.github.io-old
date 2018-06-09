@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Sun Rongyang's Blog - C++</title><link href="https://sun-rongyang.github.io/" rel="alternate"></link><link href="https://sun-rongyang.github.io/feeds/c.atom.xml" rel="self"></link><id>https://sun-rongyang.github.io/</id><updated>2018-06-09T19:43:00+08:00</updated><entry><title>Install GoogleTest on Mac OSX</title><link href="https://sun-rongyang.github.io/2018/install-googletest-on-mac-osx.html" rel="alternate"></link><published>2018-06-09T19:43:00+08:00</published><updated>2018-06-09T19:43:00+08:00</updated><author><name>Sun Rongyang</name></author><id>tag:sun-rongyang.github.io,2018-06-09:/2018/install-googletest-on-mac-osx.html</id><summary type="html">&lt;p&gt;GoogleTest is an awesome C++ testing framework. It is easy to install and use.&lt;/p&gt;
+&lt;p&gt;First, download GoogleTest from github.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/google/googletest.git gtest
+&lt;span class="nb"&gt;cd&lt;/span&gt; gtest
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then, use &lt;code&gt;cmake&lt;/code&gt; to build the GoogleTest.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;mkdir build
+&lt;span class="nb"&gt;cd&lt;/span&gt; build
+cmake ..
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Use &lt;code&gt;ccmake .&lt;/code&gt; to turn on a project cmake …&lt;/p&gt;</summary><content type="html">&lt;p&gt;GoogleTest is an awesome C++ testing framework. It is easy to install and use.&lt;/p&gt;
+&lt;p&gt;First, download GoogleTest from github.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/google/googletest.git gtest
+&lt;span class="nb"&gt;cd&lt;/span&gt; gtest
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then, use &lt;code&gt;cmake&lt;/code&gt; to build the GoogleTest.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;mkdir build
+&lt;span class="nb"&gt;cd&lt;/span&gt; build
+cmake ..
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Use &lt;code&gt;ccmake .&lt;/code&gt; to turn on a project cmake configuration TUI. Using the TUI, set &lt;code&gt;BUILD_GTEST: ON&lt;/code&gt; and change &lt;code&gt;CMAKE_INSTALL_PREFIX&lt;/code&gt;.
+Finally, compile and install.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;make
+sudo make install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To use the GoogleTest, compile you own testing file by adding the following compiler argument:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;g++ -lgtest -lgtest_main
+&lt;/pre&gt;&lt;/div&gt;</content><category term="c++"></category><category term="testing"></category><category term="TDD"></category></entry></feed>
